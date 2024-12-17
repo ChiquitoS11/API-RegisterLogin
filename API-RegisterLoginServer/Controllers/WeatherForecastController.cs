@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace LoginRegister.Controllers
+namespace API_RegisterLoginServer.Controllers
 {
     [ApiController]
     [Route("[controller]")]

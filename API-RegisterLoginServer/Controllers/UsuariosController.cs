@@ -5,29 +5,29 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using LoginRegister.Models;
+using API_RegisterLoginServer.Models;
 
-namespace LoginRegister.Controllers
+namespace API_RegisterLoginServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Usuarios1Controller : ControllerBase
+    public class UsuariosController : ControllerBase
     {
         private readonly Conexiones _context;
 
-        public Usuarios1Controller(Conexiones context)
+        public UsuariosController(Conexiones context)
         {
             _context = context;
         }
 
-        // GET: api/Usuarios1
+        // GET: api/Usuarios
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Usuarios>>> GetUsuarios()
         {
             return await _context.Usuarios.ToListAsync();
         }
 
-        // GET: api/Usuarios1/5
+        // GET: api/Usuarios/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuarios>> GetUsuarios(int id)
         {
@@ -41,7 +41,7 @@ namespace LoginRegister.Controllers
             return usuarios;
         }
 
-        // PUT: api/Usuarios1/5
+        // PUT: api/Usuarios/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsuarios(int id, Usuarios usuarios)
@@ -72,7 +72,7 @@ namespace LoginRegister.Controllers
             return NoContent();
         }
 
-        // POST: api/Usuarios1
+        // POST: api/Usuarios
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Usuarios>> PostUsuarios(Usuarios usuarios)
@@ -80,10 +80,12 @@ namespace LoginRegister.Controllers
             _context.Usuarios.Add(usuarios);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUsuarios", new { id = usuarios.Id }, usuarios);
+            // return CreatedAtAction("GetUsuarios", new { id = usuarios.Id }, usuarios); // metodo en "desuso" en .NET 6
+            
+            return CreatedAtAction(nameof(GetUsuarios), new { id = usuarios.Id }, usuarios);
         }
 
-        // DELETE: api/Usuarios1/5
+        // DELETE: api/Usuarios/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUsuarios(int id)
         {
@@ -91,6 +93,7 @@ namespace LoginRegister.Controllers
             if (usuarios == null)
             {
                 return NotFound();
+                return NoContent();
             }
 
             _context.Usuarios.Remove(usuarios);

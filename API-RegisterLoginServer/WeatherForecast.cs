@@ -1,4 +1,4 @@
-namespace LoginRegister
+namespace API_RegisterLoginServer
 {
     public class WeatherForecast
     {
